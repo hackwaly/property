@@ -1,3 +1,4 @@
+export {isProperty} from './property';
 export * from './constant';
 export * from './stored';
 export * from './computed';

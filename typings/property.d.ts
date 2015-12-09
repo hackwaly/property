@@ -17,6 +17,7 @@ declare module "property" {
 	interface TDisposable {
 		dispose(): void;
 	}
+	function isProperty(obj: any): obj is TProperty<any>;
 	function constant<TValue>(value: TValue): TProperty<TValue>;
 	function stored<TValue>(initialValue: TValue): TWritableProperty<TValue>;
 	function computed<TValue>(getter: () => TValue): TProperty<TValue>;

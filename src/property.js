@@ -62,3 +62,7 @@ export class Property {
         dirtyPropagation.mark(this);
     }
 }
+
+export function isProperty(obj) {
+    return obj instanceof Property;
+}
