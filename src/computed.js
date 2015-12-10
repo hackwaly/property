@@ -7,6 +7,8 @@ const Flags_updated = 1;
 const Flags_evaluating = 2;
 const Flags_final = 4;
 
+let isDoingEnterObserved = false;
+
 class ComputedProperty extends Property {
     flags = Flags_none;
     field = undefined;
@@ -39,6 +41,9 @@ class ComputedProperty extends Property {
     }
 
     get() {
+        if (!this.isObserved() && !isDoingEnterObserved) {
+            return (this.getter)();
+        }
         this.update();
         return this.field;
     }
@@ -94,9 +99,24 @@ class ComputedProperty extends Property {
         (this.setter)(value);
     }
 
+    enterObserved() {
+        let prev = isDoingEnterObserved;
+        isDoingEnterObserved = true;
+        this.update();
+        isDoingEnterObserved = prev;
+    }
+
+    leaveObserved() {
+        this.swapLinkedDependencies(this.dependencies, null, true);
+        this.field = undefined;
+        this.flags &= ~Flags_updated;
+    }
+
     onNotify() {
         this.flags &= ~Flags_updated;
-        dirtyPropagation.queue(this);
+        if (this.observers.length > 0) {
+            dirtyPropagation.queue(this);
+        }
     }
 }
 

@@ -21,6 +21,10 @@ export class Property {
         return false;
     }
 
+    isObserved() {
+        return this.observers.length > 0;
+    }
+
     value() {
         if (!this.isFinal()) {
             dependencyDetection.track(this);
@@ -36,6 +40,9 @@ export class Property {
             return;
         }
         this.observers.push(observer);
+        if (this.observers.length <= 1) {
+            this.enterObserved();
+        }
     }
 
     removeObserver(observer) {
@@ -45,6 +52,9 @@ export class Property {
         let index = this.observers.indexOf(observer);
         if (index >= 0) {
             this.observers.splice(index, 1);
+            if (this.observers.length <= 0) {
+                this.leaveObserved();
+            }
         }
     }
 
@@ -56,6 +66,10 @@ export class Property {
             this.observers = null;
         }
     }
+
+    enterObserved() {}
+    
+    leaveObserved() {}
 
     markDirty() {
         this.revision++;
