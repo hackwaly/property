@@ -5,6 +5,7 @@ let updateQueue = new Set();
 
 let scheduled = false;
 let fulfilled = Promise.resolve();
+let committing = false;
 
 function schedule() {
     if (!scheduled) {
@@ -24,6 +25,10 @@ export function queue(property) {
 }
 
 export function commit() {
+    if (committing) {
+        return;
+    }
+    committing = true;
     while (dirtySeeds.size > 0 || updateQueue.size > 0) {
         while (dirtySeeds.size > 0) {
             let properties = dirtySeeds;
@@ -40,5 +45,6 @@ export function commit() {
             });
         }
     }
+    committing = false;
     scheduled = false;
 }

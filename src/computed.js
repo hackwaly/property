@@ -41,6 +41,7 @@ class ComputedProperty extends Property {
     }
 
     get() {
+        dirtyPropagation.commit();
         if (!this.isObserved() && !isDoingEnterObserved) {
             return (this.getter)();
         }
@@ -65,11 +66,13 @@ class ComputedProperty extends Property {
         } else {
             this.swapLinkedDependencies(this.dependencies, dependencies, true);
         }
+
+        this.field = value;
+        this.flags |= Flags_updated;
+
         if (this.field !== value) {
-            this.field = value;
             this.markDirty();
         }
-        this.flags |= Flags_updated;
     }
 
     swapLinkedDependencies(oldDependencies, newDependencies, update) {
