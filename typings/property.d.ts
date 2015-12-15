@@ -21,6 +21,7 @@ declare module "property" {
 	function constant<TValue>(value: TValue): TProperty<TValue>;
 	function stored<TValue>(initialValue: TValue): TWritableProperty<TValue>;
 	function computed<TValue>(getter: () => TValue): TProperty<TValue>;
+	function computed<TValue>(getter: () => TValue, setter: (value: TValue) => void): TWritableProperty<TValue>;
 	function pure<TValue>(getter: () => TValue): TProperty<TValue>;
 	function slot<TValue>(initialValue: TValue): TInjectableProperty<TValue>;
 	function slot<TValue>(initialValue: TProperty<TValue>): TInjectableProperty<TValue>;
