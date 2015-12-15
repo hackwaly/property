@@ -5,10 +5,10 @@ class StoredProperty extends Property {
 
     constructor(initialValue, filter) {
         super();
-        this.field = (this.filter)(initialValue);
         if (filter !== undefined) {
             this.filter = filter;
         }
+        this.field = (this.filter)(initialValue);
     }
 
     filter(value) {
