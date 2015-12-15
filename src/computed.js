@@ -67,10 +67,15 @@ class ComputedProperty extends Property {
             this.swapLinkedDependencies(this.dependencies, dependencies, true);
         }
 
-        this.field = value;
+        let changed = false;
+        if (this.field !== value) {
+            this.field = value;
+            changed = true;
+        }
+
         this.flags |= Flags_updated;
 
-        if (this.field !== value) {
+        if (changed) {
             this.markDirty();
         }
     }
