@@ -3,9 +3,16 @@ import {Property} from './property';
 class StoredProperty extends Property {
     field;
 
-    constructor(initialValue) {
+    constructor(initialValue, filter) {
         super();
-        this.field = initialValue;
+        this.field = (this.filter)(initialValue);
+        if (filter !== undefined) {
+            this.filter = filter;
+        }
+    }
+
+    filter(value) {
+        return value;
     }
 
     get() {
@@ -13,6 +20,9 @@ class StoredProperty extends Property {
     }
 
     set(value) {
+        if (this.filter !== undefined) {
+            value = (this.filter)(value);
+        }
         if (this.field !== value) {
             this.field = value;
             this.markDirty();

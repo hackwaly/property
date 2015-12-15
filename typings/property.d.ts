@@ -19,7 +19,7 @@ declare module "property" {
 	}
 	function isProperty(obj: any): obj is TProperty<any>;
 	function constant<TValue>(value: TValue): TProperty<TValue>;
-	function stored<TValue>(initialValue: TValue): TWritableProperty<TValue>;
+	function stored<TValue>(initialValue: TValue, filter?: (value: TValue) => TValue): TWritableProperty<TValue>;
 	function computed<TValue>(getter: () => TValue): TProperty<TValue>;
 	function computed<TValue>(getter: () => TValue, setter: (value: TValue) => void): TWritableProperty<TValue>;
 	function pure<TValue>(getter: () => TValue): TProperty<TValue>;
