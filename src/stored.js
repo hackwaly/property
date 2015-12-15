@@ -20,9 +20,7 @@ class StoredProperty extends Property {
     }
 
     set(value) {
-        if (this.filter !== undefined) {
-            value = (this.filter)(value);
-        }
+        value = (this.filter)(value);
         if (this.field !== value) {
             this.field = value;
             this.markDirty();
