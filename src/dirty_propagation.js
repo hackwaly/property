@@ -1,5 +1,3 @@
-const Flags_updated = 1;
-
 let dirtySeeds = new Set();
 let updateQueue = new Set();
 
