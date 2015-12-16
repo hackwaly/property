@@ -3,7 +3,7 @@ import * as dirtyPropagation from './dirty_propagation';
 
 class Callable {
     constructor() {
-        function delegate(args) {
+        function delegate(...args) {
             return delegate.invoke(...args);
         }
         Object.setPrototypeOf(delegate, Object.getPrototypeOf(this));
