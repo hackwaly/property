@@ -1,4 +1,6 @@
 {
+  "name": "property",
+  "version": "0.3.1",
   "private": true,
   "jsnext:main": "src/index",
   "main": "lib/main.js",
