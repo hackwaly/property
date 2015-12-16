@@ -1,10 +1,10 @@
 export function observe(property, callback) {
-    let revision = NaN;
+    let version = NaN;
     let observer = {
         onNotify(property) {
             let value = property.value();
-            if (property.revision !== revision) {
-                revision = property.revision;
+            if (property.version !== version) {
+                version = property.version;
                 callback(value);
             }
         },

@@ -1,7 +1,7 @@
 declare module "property" {
 	interface TProperty<TValue> {
-		revision: number;
 		(): TValue;
+		version: number;
 		isFinal(): boolean;
 		isWritable(): boolean;
 		isComputed(): boolean;

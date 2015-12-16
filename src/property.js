@@ -12,7 +12,7 @@ class Callable {
 }
 
 export class Property extends Callable {
-    revision = 0;
+    version = 0;
     observers = [];
 
     isFinal() {
@@ -86,7 +86,7 @@ export class Property extends Callable {
     leaveObserved() {}
 
     markDirty() {
-        this.revision++;
+        this.version++;
         dirtyPropagation.mark(this);
     }
 }
