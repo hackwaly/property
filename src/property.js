@@ -1,7 +1,17 @@
 import * as dependencyDetection from './dependency_detection';
 import * as dirtyPropagation from './dirty_propagation';
 
-export class Property {
+class Callable {
+    constructor() {
+        function delegate(args) {
+            return delegate.invoke(...args);
+        }
+        Object.setPrototypeOf(delegate, Object.getPrototypeOf(this));
+        return delegate;
+    }
+}
+
+export class Property extends Callable {
     revision = 0;
     observers = [];
 
@@ -23,6 +33,10 @@ export class Property {
 
     isObserved() {
         return this.observers.length > 0;
+    }
+
+    invoke() {
+        return this.value();
     }
 
     value() {
