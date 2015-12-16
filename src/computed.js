@@ -36,10 +36,6 @@ class ComputedProperty extends Property {
         return true;
     }
 
-    isPure() {
-        return false;
-    }
-
     get() {
         dirtyPropagation.commit();
         if (!this.isObserved() && !isDoingEnterObserved) {
@@ -59,7 +55,7 @@ class ComputedProperty extends Property {
         this.flags |= Flags_evaluating;
         let {value, dependencies} = dependencyDetection.evaluate(this.getter);
         this.flags &= ~Flags_evaluating;
-        if (this.isPure() && dependencies.size <= 0) {
+        if (dependencies.size <= 0) {
             this.flags |= Flags_final;
             this.getter = null;
             this.swapLinkedDependencies(this.dependencies, null, true);
@@ -128,20 +124,6 @@ class ComputedProperty extends Property {
     }
 }
 
-class PureComputedProperty extends ComputedProperty {
-    constructor(getter) {
-        super(getter);
-    }
-
-    isPure() {
-        return true;
-    }
-}
-
 export function computed(getter, setter) {
     return new ComputedProperty(getter, setter);
-}
-
-export function pure(getter) {
-    return new PureComputedProperty(getter);
 }
